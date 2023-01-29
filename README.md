@@ -1,4 +1,8 @@
-# semantic-release-telegram
+## Fork from pustovitDmytro/semantic-release-telegram
+
+Update telegram api version
+
+# semantic-release-tg
 [semantic-release][sr-url] plugin. Provides notifications to [Telegram][tg-url] chats.
 
 [![Version][badge-vers]][npm]
@@ -50,7 +54,7 @@ Package is [continuously tested][node-ver-test-url] on darwin, linux and win32 p
 To install the library run the following command
 
 ```bash
-  npm i --save semantic-release-telegram
+  npm i --save semantic-release-tg
 ```
 
 ## Usage
@@ -61,7 +65,7 @@ The plugin can be configured in the semantic-release [configuration file][sr-con
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    [ "semantic-release-telegram", {
+    [ "semantic-release-tg", {
       "chats": [ 123456789, -987654321 ]
     } ]
   ]
@@ -80,7 +84,7 @@ if needed, the configuration can be extended:
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    ["semantic-release-telegram", {
+    ["semantic-release-tg", {
       "name": "funny-app",
       "chats": [ 123456789 ],
       "templates": {
@@ -107,7 +111,7 @@ Template variables:
 
 | key | Templates | Description | Example |
 |----|---|-----------------------|--------|
-| `repository_url` | success, fail | The git repository URL. By default repository property in package.json or git origin url | https://github.com/pustovitDmytro/semantic-release-telegram
+| `repository_url` | success, fail | The git repository URL. By default repository property in package.json or git origin url | https://github.com/pustovitDmytro/semantic-release-tg
 | `name` | success, fail | application name | funny-app
 | `version` | success | new version | 1.0.0
 | `release_notes` | success | generated notes |
@@ -162,49 +166,49 @@ Upload bulky markdowns, as [telegra.ph](https://telegra.ph/) stories. Use next a
 
 Make the changes to the code and tests. Then commit to your branch. Be sure to follow the commit message conventions. Read [Contributing Guidelines](.github/CONTRIBUTING.md) for details.
 
-[npm]: https://www.npmjs.com/package/semantic-release-telegram
-[github]: https://github.com/pustovitDmytro/semantic-release-telegram
-[travis]: https://travis-ci.org/pustovitDmytro/semantic-release-telegram
-[coveralls]: https://coveralls.io/github/pustovitDmytro/semantic-release-telegram?branch=master
-[badge-deps]: https://img.shields.io/librariesio/release/npm/semantic-release-telegram.svg
-[badge-vuln]: https://img.shields.io/snyk/vulnerabilities/npm/semantic-release-telegram.svg?style=popout
-[badge-vers]: https://img.shields.io/npm/v/semantic-release-telegram.svg
-[badge-lic]: https://img.shields.io/github/license/pustovitDmytro/semantic-release-telegram.svg
-[badge-coverage]: https://coveralls.io/repos/github/pustovitDmytro/semantic-release-telegram/badge.svg?branch=master
-[url-coverage]: https://coveralls.io/github/pustovitDmytro/semantic-release-telegram?branch=master
+[npm]: https://www.npmjs.com/package/semantic-release-tg
+[github]: https://github.com/pustovitDmytro/semantic-release-tg
+[travis]: https://travis-ci.org/pustovitDmytro/semantic-release-tg
+[coveralls]: https://coveralls.io/github/pustovitDmytro/semantic-release-tg?branch=master
+[badge-deps]: https://img.shields.io/librariesio/release/npm/semantic-release-tg.svg
+[badge-vuln]: https://img.shields.io/snyk/vulnerabilities/npm/semantic-release-tg.svg?style=popout
+[badge-vers]: https://img.shields.io/npm/v/semantic-release-tg.svg
+[badge-lic]: https://img.shields.io/github/license/pustovitDmytro/semantic-release-tg.svg
+[badge-coverage]: https://coveralls.io/repos/github/pustovitDmytro/semantic-release-tg/badge.svg?branch=master
+[url-coverage]: https://coveralls.io/github/pustovitDmytro/semantic-release-tg?branch=master
 
-[snyk-badge]: https://snyk-widget.herokuapp.com/badge/npm/semantic-release-telegram/badge.svg
-[snyk-url]: https://snyk.io/advisor/npm-package/semantic-release-telegram
+[snyk-badge]: https://snyk-widget.herokuapp.com/badge/npm/semantic-release-tg/badge.svg
+[snyk-url]: https://snyk.io/advisor/npm-package/semantic-release-tg
 
-[tests-badge]: https://img.shields.io/circleci/build/github/pustovitDmytro/semantic-release-telegram
-[tests-url]: https://app.circleci.com/pipelines/github/pustovitDmytro/semantic-release-telegram
+[tests-badge]: https://img.shields.io/circleci/build/github/pustovitDmytro/semantic-release-tg
+[tests-url]: https://app.circleci.com/pipelines/github/pustovitDmytro/semantic-release-tg
 
-[codefactor-badge]: https://www.codefactor.io/repository/github/pustovitdmytro/semantic-release-telegram/badge
-[codefactor-url]: https://www.codefactor.io/repository/github/pustovitdmytro/semantic-release-telegram
+[codefactor-badge]: https://www.codefactor.io/repository/github/pustovitdmytro/semantic-release-tg/badge
+[codefactor-url]: https://www.codefactor.io/repository/github/pustovitdmytro/semantic-release-tg
 
-[commit-activity-badge]: https://img.shields.io/github/commit-activity/m/pustovitDmytro/semantic-release-telegram
+[commit-activity-badge]: https://img.shields.io/github/commit-activity/m/pustovitDmytro/semantic-release-tg
 
-[scrutinizer-badge]: https://scrutinizer-ci.com/g/pustovitDmytro/semantic-release-telegram/badges/quality-score.png?b=master
-[scrutinizer-url]: https://scrutinizer-ci.com/g/pustovitDmytro/semantic-release-telegram/?branch=master
+[scrutinizer-badge]: https://scrutinizer-ci.com/g/pustovitDmytro/semantic-release-tg/badges/quality-score.png?b=master
+[scrutinizer-url]: https://scrutinizer-ci.com/g/pustovitDmytro/semantic-release-tg/?branch=master
 
-[lgtm-lg-badge]: https://img.shields.io/lgtm/grade/javascript/g/pustovitDmytro/semantic-release-telegram.svg?logo=lgtm&logoWidth=18
-[lgtm-lg-url]: https://lgtm.com/projects/g/pustovitDmytro/semantic-release-telegram/context:javascript
+[lgtm-lg-badge]: https://img.shields.io/lgtm/grade/javascript/g/pustovitDmytro/semantic-release-tg.svg?logo=lgtm&logoWidth=18
+[lgtm-lg-url]: https://lgtm.com/projects/g/pustovitDmytro/semantic-release-tg/context:javascript
 
-[lgtm-alerts-badge]: https://img.shields.io/lgtm/alerts/g/pustovitDmytro/semantic-release-telegram.svg?logo=lgtm&logoWidth=18
-[lgtm-alerts-url]: https://lgtm.com/projects/g/pustovitDmytro/semantic-release-telegram/alerts/
+[lgtm-alerts-badge]: https://img.shields.io/lgtm/alerts/g/pustovitDmytro/semantic-release-tg.svg?logo=lgtm&logoWidth=18
+[lgtm-alerts-url]: https://lgtm.com/projects/g/pustovitDmytro/semantic-release-tg/alerts/
 
 [codacy-badge]: https://app.codacy.com/project/badge/Grade/8667aa23afaa4725854f098c4b5e8890
-[codacy-url]: https://www.codacy.com/gh/pustovitDmytro/semantic-release-telegram/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pustovitDmytro/semantic-release-telegram&amp;utm_campaign=Badge_Grade
+[codacy-url]: https://www.codacy.com/gh/pustovitDmytro/semantic-release-tg/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pustovitDmytro/semantic-release-tg&amp;utm_campaign=Badge_Grade
 
-[sonarcloud-badge]: https://sonarcloud.io/api/project_badges/measure?project=pustovitDmytro_semantic-release-telegram&metric=alert_status
-[sonarcloud-url]: https://sonarcloud.io/dashboard?id=pustovitDmytro_semantic-release-telegram
+[sonarcloud-badge]: https://sonarcloud.io/api/project_badges/measure?project=pustovitDmytro_semantic-release-tg&metric=alert_status
+[sonarcloud-url]: https://sonarcloud.io/dashboard?id=pustovitDmytro_semantic-release-tg
 
-[npm-downloads-badge]: https://img.shields.io/npm/dw/semantic-release-telegram
-[npm-size-badge]: https://img.shields.io/bundlephobia/min/semantic-release-telegram
-[npm-size-url]: https://bundlephobia.com/result?p=semantic-release-telegram
+[npm-downloads-badge]: https://img.shields.io/npm/dw/semantic-release-tg
+[npm-size-badge]: https://img.shields.io/bundlephobia/min/semantic-release-tg
+[npm-size-url]: https://bundlephobia.com/result?p=semantic-release-tg
 
-[node-ver-test-badge]: https://github.com/pustovitDmytro/semantic-release-telegram/actions/workflows/npt.yml/badge.svg?branch=master
-[node-ver-test-url]: https://github.com/pustovitDmytro/semantic-release-telegram/actions?query=workflow%3A%22Node.js+versions%22
+[node-ver-test-badge]: https://github.com/pustovitDmytro/semantic-release-tg/actions/workflows/npt.yml/badge.svg?branch=master
+[node-ver-test-url]: https://github.com/pustovitDmytro/semantic-release-tg/actions?query=workflow%3A%22Node.js+versions%22
 
-[fossa-badge]: https://app.fossa.com/api/projects/custom%2B24828%2Fsemantic-release-telegram.svg?type=shield
-[fossa-url]: https://app.fossa.com/projects/custom%2B24828%2Fsemantic-release-telegram?ref=badge_shield
+[fossa-badge]: https://app.fossa.com/api/projects/custom%2B24828%2Fsemantic-release-tg.svg?type=shield
+[fossa-url]: https://app.fossa.com/projects/custom%2B24828%2Fsemantic-release-tg?ref=badge_shield

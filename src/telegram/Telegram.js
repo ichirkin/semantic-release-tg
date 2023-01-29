@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import { Stream } from 'stream';
 import { fill } from 'myrmidon';
@@ -13,7 +12,7 @@ function getArchiveStream(patterns, root) {
     const archive = archiver('zip', { zlib: { level: 9 } });
     const streamPassThrough = new Stream.PassThrough();
 
-    patterns.forEach(item => {
+    patterns.forEach((item) => {
         archive.glob(item, { cwd: root });
     });
 
@@ -24,14 +23,14 @@ function getArchiveStream(patterns, root) {
 }
 
 export default class Telegram {
-    constructor(botId, dotToken, chats) {
-        this.api = new Api(botId, dotToken);
+    constructor(dotToken, chats) {
+        this.api = new Api(dotToken);
         this.chats = chats;
     }
 
     async send(template, variables, { files = [], telegraph } = {}) {
         const html = fill(template, variables);
-        const promises = this.chats.map(async chat => {
+        const promises = this.chats.map(async (chat) => {
             await this.api.sendMessage(chat, html);
 
             if (telegraph?.message) {
@@ -40,22 +39,26 @@ export default class Telegram {
                 await this.api.sendMessage(chat, telegraphHtml, true);
             }
 
-            await Promise.all(files.map(async file => {
-                const stream = file.glob
-                    ? getArchiveStream(file.glob, file.rootDir)
-                    : fs.createReadStream(file.path);
+            await Promise.all(
+                files.map(async (file) => {
+                    const stream = file.glob
+                        ? getArchiveStream(file.glob, file.rootDir)
+                        : fs.createReadStream(file.path);
 
-                if (file.name) stream.path = file.name;
+                    if (file.name) stream.path = file.name;
 
-                await this.api.sendFile(chat, stream);
-            }));
+                    await this.api.sendFile(chat, stream);
+                })
+            );
         });
 
         await Promise.all(promises);
     }
 
     async test() {
-        const chats = await Promise.all(this.chats.map(chat => this.api.test(chat)));
+        const chats = await Promise.all(
+            this.chats.map((chat) => this.api.test(chat))
+        );
 
         return chats.map((element) => dumpChat(element));
     }

@@ -6,7 +6,7 @@ const { getVariables } = load('utils');
 suite('getVariables');
 
 const repository = {
-    url           : 'https://github.com/pustovitDmytro/semantic-release-telegram.git',
+    url           : 'https://github.com/pustovitDmytro/semantic-release-tg.git',
     protocol      : 'https',
     dropHTTPSAuth : true
 };
@@ -14,25 +14,22 @@ const repository = {
 test('Keep https url as is', async function () {
     const verified = { repository };
 
-    assert.deepOwnInclude(
-        getVariables({ verified }),
-        { 'repository_url': repository.url }
-    );
+    assert.deepOwnInclude(getVariables({ verified }), {
+        repository_url : repository.url
+    });
 });
-
 
 test('Resolve ssh url', async function () {
     const verified = {
         repository : {
             ...repository,
-            url : 'git@github.com:pustovitDmytro/semantic-release-telegram.git'
+            url : 'git@github.com:pustovitDmytro/semantic-release-tg.git'
         }
     };
 
-    assert.deepOwnInclude(
-        getVariables({ verified }),
-        { 'repository_url': 'https://github.com/pustovitDmytro/semantic-release-telegram.git' }
-    );
+    assert.deepOwnInclude(getVariables({ verified }), {
+        repository_url : 'https://github.com/pustovitDmytro/semantic-release-tg.git'
+    });
 });
 
 test('Drop basic auth in https url', async function () {
@@ -40,12 +37,11 @@ test('Drop basic auth in https url', async function () {
         repository : {
             ...repository,
             // eslint-disable-next-line no-secrets/no-secrets
-            url : 'https://a943eb35-1103-578a-84eb-b7320f67b076@github.com/pustovitDmytro/semantic-release-telegram.git'
+            url : 'https://a943eb35-1103-578a-84eb-b7320f67b076@github.com/pustovitDmytro/semantic-release-tg.git'
         }
     };
 
-    assert.deepOwnInclude(
-        getVariables({ verified }),
-        { 'repository_url': 'https://github.com/pustovitDmytro/semantic-release-telegram.git' }
-    );
+    assert.deepOwnInclude(getVariables({ verified }), {
+        repository_url : 'https://github.com/pustovitDmytro/semantic-release-tg.git'
+    });
 });

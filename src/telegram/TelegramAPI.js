@@ -3,8 +3,8 @@ import BaseAPI from 'base-api-client';
 import FormData from 'form-data';
 
 export default class TelegramAPI extends BaseAPI {
-    constructor(id, token) {
-        super(`https://api.telegram.org/bot${id}:${token}`);
+    constructor(token) {
+        super(`https://api.telegram.org/bot${token}`);
     }
 
     onResponse(res) {
@@ -13,17 +13,17 @@ export default class TelegramAPI extends BaseAPI {
 
     sendMessage(chatId, html, preview = false) {
         return this.post('sendMessage', {
-            'parse_mode'               : 'HTML',
-            'text'                     : html,
-            'chat_id'                  : chatId,
-            'disable_web_page_preview' : !preview
+            parse_mode               : 'HTML',
+            text                     : html,
+            chat_id                  : chatId,
+            disable_web_page_preview : !preview
         });
     }
 
     sendFile(chatId, stream) {
         const form = new FormData();
 
-        form.append('document', stream,  { filepath: stream.path });
+        form.append('document', stream, { filepath: stream.path });
         form.append('chat_id', chatId);
 
         return this.post('sendDocument', form, {
@@ -34,7 +34,7 @@ export default class TelegramAPI extends BaseAPI {
 
     test(chatId) {
         return this.post('getChat', {
-            'chat_id' : chatId
+            chat_id : chatId
         });
     }
 }

@@ -35,26 +35,25 @@ test('Positive: valid configuration', async function () {
     );
 
     assert.deepOwnInclude(context.verified, {
-        'botID'      : 'I7ezq',
-        'botToken'   : 'TiHdAYgZ6xRTv0',
-        'branch'     : 'master',
-        'repository' : {
+        botToken   : 'TiHdAYgZ6xRTv0',
+        branch     : 'master',
+        repository : {
             url           : options.repositoryUrl,
             protocol      : 'https',
             dropHTTPSAuth : true
         },
-        'chats'     : [ 9 ],
-        // 'name'      : 'semantic-release-telegram',
-        'templates' : {
-            'fail'    : 'An <b><i>error</i></b> occured while trying to publish the new version of <b>{name}</b>.\n<pre><code class="language-javascript">{error}</code></pre>',
-            'success' : "A <b><i>{release_type}</i></b> version of <a href='{repository_url}'>{name}</a> has been released. Current version is <b>{version}</b>"
-
+        chats     : [ 9 ],
+        // 'name'      : 'semantic-release-tg',
+        templates : {
+            fail    : 'An <b><i>error</i></b> occured while trying to publish the new version of <b>{name}</b>.\n<pre><code class="language-javascript">{error}</code></pre>',
+            success :
+        "A <b><i>{release_type}</i></b> version of <a href='{repository_url}'>{name}</a> has been released. Current version is <b>{version}</b>"
         }
     });
 
     const [ apiCall ] = await factory.getApiCalls('type=requestSent&url=getChat');
 
-    assert.deepEqual(apiCall.data, { 'chat_id': 9 });
+    assert.deepEqual(apiCall.data, { chat_id: 9 });
 });
 
 test('Positive: assets', async function () {
@@ -80,20 +79,19 @@ test('Positive: assets', async function () {
     );
 
     assert.deepOwnInclude(context.verified, {
-        'botID'      : 'avxuD60y',
-        'botToken'   : 'gmWKbSq7yeq4Z',
-        'branch'     : 'master',
-        'repository' : {
+        botToken   : 'gmWKbSq7yeq4Z',
+        branch     : 'master',
+        repository : {
             url           : options.repositoryUrl,
             protocol      : 'https',
             dropHTTPSAuth : true
         },
-        'chats'     : [ 9 ],
-        'name'      : 'app',
-        'templates' : {
-            'fail'    : 'An <b><i>error</i></b> occured while trying to publish the new version of <b>{name}</b>.\n<pre><code class="language-javascript">{error}</code></pre>',
-            'success' : "A <b><i>{release_type}</i></b> version of <a href='{repository_url}'>{name}</a> has been released. Current version is <b>{version}</b>"
-
+        chats     : [ 9 ],
+        name      : 'app',
+        templates : {
+            fail    : 'An <b><i>error</i></b> occured while trying to publish the new version of <b>{name}</b>.\n<pre><code class="language-javascript">{error}</code></pre>',
+            success :
+        "A <b><i>{release_type}</i></b> version of <a href='{repository_url}'>{name}</a> has been released. Current version is <b>{version}</b>"
         },
         assets : [
             { path: 'CHANGELOG.md', name: undefined },
@@ -101,7 +99,6 @@ test('Positive: assets', async function () {
         ]
     });
 });
-
 
 test('Negative: invalid chat', async function () {
     const promise = verifyConditions.call(
@@ -119,7 +116,11 @@ test('Negative: invalid chat', async function () {
         }
     );
 
-    await checkError(promise, 'VALIDATION_FAILED', '{"chats":[null,"NOT_NUMBER: The value is not a number or could not be cast to a number"]}');
+    await checkError(
+        promise,
+        'VALIDATION_FAILED',
+        '{"chats":[null,"NOT_NUMBER: The value is not a number or could not be cast to a number"]}'
+    );
 });
 
 test('Negative: inaccesible chat', async function () {
@@ -138,14 +139,17 @@ test('Negative: inaccesible chat', async function () {
         }
     );
 
-    await checkError(promise, 'API_ERROR', 'Error: Request failed with status code 400 {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}');
+    await checkError(
+        promise,
+        'API_ERROR',
+        'Error: Request failed with status code 400 {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}'
+    );
 });
-
 
 test('Positive: telegra.ph', async function () {
     const telegraph = {
         title   : '{name} v.{version}',
-        message : '<a href=\'{telegraph_url}\'>Release Notes</a>',
+        message : "<a href='{telegraph_url}'>Release Notes</a>",
         content : '{release_notes}'
     };
 
@@ -166,8 +170,14 @@ test('Positive: telegra.ph', async function () {
         }
     );
 
-    assert.lengthOf(await factory.getApiCalls('type=requestSent&url=createAccount'), 1);
-    assert.lengthOf(await factory.getApiCalls('type=requestSent&url=getAccountInfo'), 1);
+    assert.lengthOf(
+        await factory.getApiCalls('type=requestSent&url=createAccount'),
+        1
+    );
+    assert.lengthOf(
+        await factory.getApiCalls('type=requestSent&url=getAccountInfo'),
+        1
+    );
 
     assert.exists(context.verified['telegra.ph']);
     assert.exists(context.verified['telegra.ph'].token);

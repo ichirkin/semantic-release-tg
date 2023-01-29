@@ -6,37 +6,61 @@ import Telegram, { Telegraph } from './telegram';
 const rules = {
     name       : [ 'string' ],
     branch     : [ 'required', 'string' ],
-    repository : [ 'required', { 'attributes' : {
-        url           : [ 'required', 'string' ],
-        protocol      : [ { 'enum': [ 'ssh', 'https' ] }, { default: 'https' } ],
-        dropHTTPSAuth : [ 'boolean', { default: true } ]
-    } } ],
-    botID     : [ 'required', 'string' ],
+    repository : [
+        'required',
+        {
+            attributes : {
+                url           : [ 'required', 'string' ],
+                protocol      : [ { enum: [ 'ssh', 'https' ] }, { default: 'https' } ],
+                dropHTTPSAuth : [ 'boolean', { default: true } ]
+            }
+        }
+    ],
     botToken  : [ 'required', 'string' ],
-    chats     : [ 'required', { 'every': 'integer' } ],
+    chats     : [ 'required', { every: 'integer' } ],
     rootDir   : [ 'required', 'string' ],
-    templates : [ 'required', { 'attributes' : {
-        success : [ 'string', { default: success } ],
-        fail    : [ 'string', { default: fail } ]
-    } } ],
-    assets : [ { 'every' : { or : [
-        { 'attributes' : {
-            path : [ 'required', 'string' ],
-            name : [ 'string' ]
-        } },
-        { 'attributes' : {
-            glob : [ 'required', { 'every': 'string' }  ],
-            name : [ 'required', 'string' ]
-        } }
-    ] } } ],
-    'telegra.ph' : { 'attributes' : {
-        title   : [ 'required', 'string' ],
-        content : [ 'required', 'string' ],
-        message : [ 'required', 'string' ]
-    } }
+    templates : [
+        'required',
+        {
+            attributes : {
+                success : [ 'string', { default: success } ],
+                fail    : [ 'string', { default: fail } ]
+            }
+        }
+    ],
+    assets : [
+        {
+            every : {
+                or : [
+                    {
+                        attributes : {
+                            path : [ 'required', 'string' ],
+                            name : [ 'string' ]
+                        }
+                    },
+                    {
+                        attributes : {
+                            glob : [ 'required', { every: 'string' } ],
+                            name : [ 'required', 'string' ]
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    'telegra.ph' : {
+        attributes : {
+            title   : [ 'required', 'string' ],
+            content : [ 'required', 'string' ],
+            message : [ 'required', 'string' ]
+        }
+    }
 };
 
-export default async function verifyConditions(pluginConfig, { logger, cwd, env, options, branch }) {
+export default async function verifyConditions(
+    pluginConfig,
+    { logger, cwd, env, options, branch }
+) {
     // eslint-disable-next-line security/detect-non-literal-require
     const info = require(path.resolve(cwd, 'package.json'));
     const opts = {
@@ -46,7 +70,6 @@ export default async function verifyConditions(pluginConfig, { logger, cwd, env,
 
     const raw = {
         ...opts,
-        botID      : env.TELEGRAM_BOT_ID,
         botToken   : env.TELEGRAM_BOT_TOKEN,
         rootDir    : cwd,
         branch     : branch.name,
@@ -61,7 +84,7 @@ export default async function verifyConditions(pluginConfig, { logger, cwd, env,
     };
 
     const data = validate(raw, rules);
-    const telegram = new Telegram(data.botID, data.botToken, data.chats);
+    const telegram = new Telegram(data.botToken, data.chats);
     const chatTitles = await telegram.test();
 
     logger.log(`Verified chats: ${chatTitles.join(', ')}`);
@@ -78,13 +101,9 @@ export default async function verifyConditions(pluginConfig, { logger, cwd, env,
         data['telegra.ph'].token = token;
     }
 
-    data.assets = data.assets.map(
-        asset => asset.glob
-            ? { ...asset, rootDir: data.rootDir }
-            : asset
-    );
+    data.assets = data.assets.map((asset) =>
+        asset.glob ? { ...asset, rootDir: data.rootDir } : asset);
     this.verified = data;
 
     return data;
 }
-

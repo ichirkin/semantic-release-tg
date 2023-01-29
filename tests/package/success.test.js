@@ -22,77 +22,102 @@ const repository = {
 test('Default template', async function () {
     const verified = { name: 'test-app', templates, chats: [ 1, 2 ], repository };
 
-    await success.call(
-        { verified },
-        null,
-        { logger: console, nextRelease: { version: '1.0.2', type: 'patch' } }
+    await success.call({ verified }, null, {
+        logger      : console,
+        nextRelease : { version: '1.0.2', type: 'patch' }
+    });
+
+    const apiCalls = await factory.getApiCalls(
+        'type=requestSent&url=sendMessage'
     );
 
-    const apiCalls = await factory.getApiCalls('type=requestSent&url=sendMessage');
-
     assert.lengthOf(apiCalls, 2);
-    assert.deepEqual(apiCalls.map(i => i.data.chat_id), [ 1, 2 ]);
-    apiCalls.forEach(item => {
-        assert.equal(item.data.text, `A <b><i>patch</i></b> version of <a href='https://bo.sh/amoti'>${verified.name}</a> has been released. Current version is <b>1.0.2</b>`);
+    assert.deepEqual(
+        apiCalls.map((i) => i.data.chat_id),
+        [ 1, 2 ]
+    );
+    apiCalls.forEach((item) => {
+        assert.equal(
+            item.data.text,
+            `A <b><i>patch</i></b> version of <a href='https://bo.sh/amoti'>${verified.name}</a> has been released. Current version is <b>1.0.2</b>`
+        );
     });
 });
 
 test('Positive: assets', async function () {
     const assets = [
         { path: 'CHANGELOG.md' },
-        { glob: [ 'templates/**' ], name: 'templates', rootDir: path.resolve(__dirname, '../../') }
+        {
+            glob    : [ 'templates/**' ],
+            name    : 'templates',
+            rootDir : path.resolve(__dirname, '../../')
+        }
     ];
 
-    const verified = { name: 'test-app', templates, chats: [ 1, 2 ], repository, assets };
+    const verified = {
+        name  : 'test-app',
+        templates,
+        chats : [ 1, 2 ],
+        repository,
+        assets
+    };
 
-    await success.call(
-        { verified },
-        null,
-        { logger: console, nextRelease: { version: '1.0.2', type: 'patch' } }
+    await success.call({ verified }, null, {
+        logger      : console,
+        nextRelease : { version: '1.0.2', type: 'patch' }
+    });
+
+    const apiCalls = await factory.getApiCalls(
+        'type=requestSent&url=sendDocument'
     );
-
-    const apiCalls = await factory.getApiCalls('type=requestSent&url=sendDocument');
 
     assert.lengthOf(apiCalls, 2 * 2);
 
-    for (const form of apiCalls.map(r => r.data)) {
+    for (const form of apiCalls.map((r) => r.data)) {
         assert.isNotEmpty(form.getBoundary());
     }
 });
 
-
 test('Positive: telegra.ph', async function () {
     const telegraph = {
         title   : '{name} v.{version}',
-        message : '<a href=\'{telegraph_url}\'>Release Notes</a>',
+        message : "<a href='{telegraph_url}'>Release Notes</a>",
         content : '{release_notes}'
     };
 
     const notes = `
-## [1.2.15](https://github.com/pustovitDmytro/semantic-release-telegram/compare/v1.2.14...v1.2.15) (2021-09-09)
+## [1.2.15](https://github.com/pustovitDmytro/semantic-release-tg/compare/v1.2.14...v1.2.15) (2021-09-09)
 
 ### Chore
 
-* fixes audit [devDependencies] ([d08b1fc](https://github.com/pustovitDmytro/semantic-release-telegram/commit/11))
+* fixes audit [devDependencies] ([d08b1fc](https://github.com/pustovitDmytro/semantic-release-tg/commit/11))
 
 ### Upgrade
 
-* Update dependency git-url-parse to v11.6.0 ([1](https://github.com/pustovitDmytro/semantic-release-telegram/commit/s))
+* Update dependency git-url-parse to v11.6.0 ([1](https://github.com/pustovitDmytro/semantic-release-tg/commit/s))
 `;
 
-    const verified = { name: 'test-app', templates, chats: [ 1, 2 ], repository, 'telegra.ph': telegraph };
+    const verified = {
+        name         : 'test-app',
+        templates,
+        chats        : [ 1, 2 ],
+        repository,
+        'telegra.ph' : telegraph
+    };
 
-    await success.call(
-        { verified },
-        null,
-        {
-            logger      : console,
-            nextRelease : { version: '1.0.2', type: 'patch', notes }
-        }
+    await success.call({ verified }, null, {
+        logger      : console,
+        nextRelease : { version: '1.0.2', type: 'patch', notes }
+    });
+
+    assert.lengthOf(
+        await factory.getApiCalls('type=requestSent&url=createPage'),
+        1
     );
-
-    assert.lengthOf(await factory.getApiCalls('type=requestSent&url=createPage'), 1);
-    assert.lengthOf(await factory.getApiCalls('type=requestSent&url=sendMessage'), 2 * 2);
+    assert.lengthOf(
+        await factory.getApiCalls('type=requestSent&url=sendMessage'),
+        2 * 2
+    );
 });
 
 test('Negative: missing verify', async function () {
@@ -104,7 +129,11 @@ test('Negative: missing verify', async function () {
         }
     );
 
-    await checkError(promise, 'VERIFICATION_MISSED', 'verifyConditions should be passed to run step [success]');
+    await checkError(
+        promise,
+        'VERIFICATION_MISSED',
+        'verifyConditions should be passed to run step [success]'
+    );
 });
 
 after(function () {
