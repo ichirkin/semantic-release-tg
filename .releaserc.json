@@ -29,17 +29,6 @@
       {
         "assets": [{ "path": "*.tgz", "label": "npm tarball" }]
       }
-    ],
-    [
-      "semantic-release-tg",
-      {
-        "chats": [238585617],
-        "telegra.ph": {
-          "title": "{name} v.{version}",
-          "message": "<a href='{telegraph_url}'>Release Notes</a>",
-          "content": "{release_notes}"
-        }
-      }
     ]
   ],
   "preset": "eslint",
