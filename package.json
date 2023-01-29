@@ -31,17 +31,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pustovitDmytro/semantic-release-tg.git"
+    "url": "https://github.com/ichirkin/semantic-release-tg.git"
   },
   "author": "Dmytro Pustovit",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pustovitDmytro/semantic-release-tg/issues"
+    "url": "https://github.com/ichirkin/semantic-release-tg/issues"
   },
   "engines": {
     "node": ">=10"
   },
-  "homepage": "https://github.com/pustovitDmytro/semantic-release-tg#readme",
+  "homepage": "https://github.com/ichirkin/semantic-release-tg#readme",
   "devDependencies": {
     "@babel/cli": "^7.17.0",
     "@babel/core": "^7.17.0",

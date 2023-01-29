@@ -93,7 +93,7 @@ Template variables:
 
 | key | Templates | Description | Example |
 |----|---|-----------------------|--------|
-| `repository_url` | success, fail | The git repository URL. By default repository property in package.json or git origin url | https://github.com/pustovitDmytro/semantic-release-tg
+| `repository_url` | success, fail | The git repository URL. By default repository property in package.json or git origin url | https://github.com/ichirkin/semantic-release-tg
 | `name` | success, fail | application name | funny-app
 | `version` | success | new version | 1.0.0
 | `release_notes` | success | generated notes |

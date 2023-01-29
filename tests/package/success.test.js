@@ -86,15 +86,15 @@ test('Positive: telegra.ph', async function () {
     };
 
     const notes = `
-## [1.2.15](https://github.com/pustovitDmytro/semantic-release-tg/compare/v1.2.14...v1.2.15) (2021-09-09)
+## [1.2.15](https://github.com/ichirkin/semantic-release-tg/compare/v1.2.14...v1.2.15) (2021-09-09)
 
 ### Chore
 
-* fixes audit [devDependencies] ([d08b1fc](https://github.com/pustovitDmytro/semantic-release-tg/commit/11))
+* fixes audit [devDependencies] ([d08b1fc](https://github.com/ichirkin/semantic-release-tg/commit/11))
 
 ### Upgrade
 
-* Update dependency git-url-parse to v11.6.0 ([1](https://github.com/pustovitDmytro/semantic-release-tg/commit/s))
+* Update dependency git-url-parse to v11.6.0 ([1](https://github.com/ichirkin/semantic-release-tg/commit/s))
 `;
 
     const verified = {
